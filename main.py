@@ -16,11 +16,9 @@ def addCharacter():
     #Create cursor
     cursor = dbConnection.cursor()
     #Create table
-
-    
     #Todo: If table exist skip creating table!
     
-    cursor.execute("""CREATE TABLE characters (
+    cursor.execute("""CREATE TABLE IF NOT EXISTS characters (
                         name text
                         )""") #add in future, world, lvl
     #Insert into table
@@ -66,8 +64,13 @@ def print():
 
     dbConnection.commit()
     dbConnection.close()
+    
 
 printData = Button(root, text = "Print data", command=print)
 printData.grid(row=2, column=0, columnspan=2)
+
+
+
+
 
 root.mainloop()
