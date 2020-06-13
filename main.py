@@ -16,8 +16,6 @@ def addCharacter():
     #Create cursor
     cursor = dbConnection.cursor()
     #Create table
-    #Todo: If table exist skip creating table!
-    
     cursor.execute("""CREATE TABLE IF NOT EXISTS characters (
                         name text
                         )""") #add in future, world, lvl
@@ -27,21 +25,10 @@ def addCharacter():
                     'name': entryName.get()
                 }
     )
-
     dbConnection.commit()
     dbConnection.close()
 
-
-characterName = Label(root, text="Print character name")
-characterName.grid(row=0, column=0)
-
-
-submitButton = Button(root, text="Add Character",command=addCharacter)
-submitButton.grid(row=1, column=0, columnspan=2)
-
-
 #print data from databse
-
 def print():
     #Create db and connect
     dbConnection = sqlite3.connect('characters.db')
@@ -65,6 +52,13 @@ def print():
     dbConnection.commit()
     dbConnection.close()
     
+
+characterName = Label(root, text="Print character name")
+characterName.grid(row=0, column=0)
+
+
+submitButton = Button(root, text="Add Character",command=addCharacter)
+submitButton.grid(row=1, column=0, columnspan=2)   
 
 printData = Button(root, text = "Print data", command=print)
 printData.grid(row=2, column=0, columnspan=2)
