@@ -5,7 +5,7 @@ from tkinter import messagebox
 
 root = Tk()
 root.title("Character Databse")
-root.geometry("600x150")
+root.geometry("800x800")
 
 
 
@@ -47,7 +47,7 @@ def print():
     
     #create label to for printed records
     printLabel = Label(root, text=print_records)
-    printLabel.grid(row=4, column =0, columnspan=2)
+    printLabel.grid(row=5, column =0, columnspan=2)
 
     dbConnection.commit()
     dbConnection.close()
@@ -70,6 +70,15 @@ def deleteChar():
     dbConnection.commit()
     dbConnection.close()
 
+def switcher():
+    searcher = Toplevel()
+    searcher.title("Search in TCom")
+    searcher.geometry("400x400")
+
+    testLbl = Label(searcher, text="test")
+    testLbl.grid(row=0, column =0)
+
+
 entryName = Entry(root)
 entryName.grid(row=0, column=1)
 
@@ -89,5 +98,8 @@ deleteCharacter.grid(row=3, column =0)
 
 deleteEntry = Entry(root)
 deleteEntry.grid(row=3, column = 1)
+
+updateCharsButton = Button(root, text="Update Characters", command=switcher)
+updateCharsButton.grid(row=4, column=0, columnspan = 2)
 
 root.mainloop()
