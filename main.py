@@ -1,6 +1,15 @@
 from tkinter import *
 import sqlite3
 from tkinter import messagebox
+import requests
+import json
+
+# imports to scarp web
+# from selenium import webdriver
+# from bs4 import BeautifulSoup    
+# import pandas as pd
+# from webdriver_manager.chrome import ChromeDriverManager
+
 
 
 root = Tk()
@@ -75,9 +84,29 @@ def switcher():
     searcher.title("Search in TCom")
     searcher.geometry("400x400")
 
-    testLbl = Label(searcher, text="test")
-    testLbl.grid(row=0, column =0)
+    
+    api_request = requests.get("https://api.tibiadata.com/v2/characters/Luffix Stardust.json")
+    api = json.loads(api_request.content)
+    name = api['characters']['data']['name']
+    vocation = api['characters']['data']['vocation']
+    level = api['characters']['data']['level']
+    residence = api['characters']['data']['residence']
+    world = api['characters']['data']['world']
 
+    worldLbl = Label(searcher, text=world)
+    worldLbl.grid(row=0, column =0)
+
+    nameLbl = Label(searcher, text=name)
+    nameLbl.grid(row=0, column =1)
+
+    lvlLbl = Label(searcher, text=level)
+    lvlLbl.grid(row=0, column =2)
+
+    vocationLbl = Label(searcher, text=vocation)
+    vocationLbl.grid(row=0, column =3)
+
+    residenceLbl = Label(searcher, text=residence)
+    residenceLbl.grid(row=0, column =4)
 
 entryName = Entry(root)
 entryName.grid(row=0, column=1)
