@@ -17,7 +17,6 @@ root.title("Character Databse")
 root.geometry("800x800")
 
 
-
 def addCharacter():
 
     #Create db and connect
@@ -84,7 +83,29 @@ def switcher():
     searcher.title("Search in TCom")
     searcher.geometry("400x400")
 
+
+    #Create db and connect
+    dbConnection = sqlite3.connect('characters.db')
+    #Create cursor
+    cursor = dbConnection.cursor()
     
+    fetchName = cursor.execute("SELECT name FROM characters")
+    #records = cursor.fetchall()
+    dbConnection.text_factory = str
+    fetch = cursor.execute('SELECT name FROM characters').fetchall()
+    system_id = fetch[0][0]
+    #loop thru results
+    # print_records = ''
+
+    # for record in records:
+    #     print_records += str(record) + " " "\n"
+    
+    
+    printLabel = Label(searcher, text=system_id)
+    printLabel.grid(row=5, column =0, columnspan=2)
+
+
+
     api_request = requests.get("https://api.tibiadata.com/v2/characters/Luffix Stardust.json")
     api = json.loads(api_request.content)
     name = api['characters']['data']['name']
@@ -107,6 +128,9 @@ def switcher():
 
     residenceLbl = Label(searcher, text=residence)
     residenceLbl.grid(row=0, column =4)
+
+    dbConnection.commit()
+    dbConnection.close()
 
 entryName = Entry(root)
 entryName.grid(row=0, column=1)
