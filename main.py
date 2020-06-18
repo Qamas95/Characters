@@ -16,7 +16,8 @@ root = Tk()
 root.title("Character Databse")
 root.geometry("800x800")
 
-global idik
+global character_numbers
+
 
 def addCharacter():
 
@@ -80,6 +81,8 @@ def deleteChar():
     dbConnection.close()
 
 def switcher():
+
+
     searcher = Toplevel()
     searcher.title("Search in TCom")
     searcher.geometry("400x400")
@@ -98,25 +101,27 @@ def switcher():
     names = cursor.fetchall()
 
     print_names = []
-
+    character_numbers = 0
     for item in names:
         print_names += item
+        character_numbers += 1
 
+    responses = list()
 
+    for i in range(character_numbers):
+            api_request = requests.get("https://api.tibiadata.com/v2/characters/"+print_names[i]+".json")
+            data = json.loads(api_request.text)
+            responses.append(data)
+    
 
-
-
-
-    charNamee = "Luffix Stardust"
-
-
-
-    printLabel = Label(searcher, text=print_names[0])
+    printLabel = Label(searcher, text=responses)
     printLabel.grid(row=5, column =0, columnspan=2)
 
+    printLabel2 = Label(searcher, text=character_numbers)
+    printLabel2.grid(row=6, column =0, columnspan=2)
 
-    api_request = requests.get("https://api.tibiadata.com/v2/characters/"+charNamee+".json")
-    api_request = requests.get("https://api.tibiadata.com/v2/characters/"+charNamee+".json")
+    #api_request = requests.get("https://api.tibiadata.com/v2/characters/"+charNamee+".json")
+    api_request = requests.get("https://api.tibiadata.com/v2/characters/"+print_names[0]+".json")
     api = json.loads(api_request.content)
     name = api['characters']['data']['name']
     vocation = api['characters']['data']['vocation']
@@ -138,6 +143,9 @@ def switcher():
 
     residenceLbl = Label(searcher, text=residence)
     residenceLbl.grid(row=0, column =4)
+
+
+
 
     dbConnection.commit()
     dbConnection.close()
