@@ -16,6 +16,7 @@ root = Tk()
 root.title("Character Databse")
 root.geometry("800x800")
 
+global idik
 
 def addCharacter():
 
@@ -92,20 +93,30 @@ def switcher():
     #records = cursor.fetchall()
     #dbConnection.text_factory = str
 
-    fetchName = cursor.execute('SELECT name FROM characters').fetchall()
-
-    charName = fetchName[0][0]
-
-
-
-    #loop thru results
-    # print_records = ''
-
-    # for record in records:
-    #     print_records += str(record) + " " "\n"
     
+    cursor.execute("SELECT name FROM characters")
+    names = cursor.fetchall()
 
-    api_request = requests.get("https://api.tibiadata.com/v2/characters/"+charName+".json")
+    print_names = []
+
+    for item in names:
+        print_names += item
+
+
+
+
+
+
+    charNamee = "Luffix Stardust"
+
+
+
+    printLabel = Label(searcher, text=print_names[0])
+    printLabel.grid(row=5, column =0, columnspan=2)
+
+
+    api_request = requests.get("https://api.tibiadata.com/v2/characters/"+charNamee+".json")
+    api_request = requests.get("https://api.tibiadata.com/v2/characters/"+charNamee+".json")
     api = json.loads(api_request.content)
     name = api['characters']['data']['name']
     vocation = api['characters']['data']['vocation']
