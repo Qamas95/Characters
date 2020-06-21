@@ -4,17 +4,12 @@ from tkinter import messagebox
 import requests
 import json
 
-# imports to scarp web
-# from selenium import webdriver
-# from bs4 import BeautifulSoup    
-# import pandas as pd
-# from webdriver_manager.chrome import ChromeDriverManager
-
-
 
 root = Tk()
 root.title("Character Databse")
 root.geometry("800x800")
+
+global character_numbers
 
 
 def addCharacter():
@@ -62,7 +57,6 @@ def print():
     
 def deleteChar():
 
-
     if deleteEntry.get() == '':
         return messagebox.showerror('Warning','Empty delet ID')
 
@@ -83,50 +77,37 @@ def switcher():
     searcher.title("Search in TCom")
     searcher.geometry("400x400")
 
-
     #Create db and connect
     dbConnection = sqlite3.connect('characters.db')
     #Create cursor
     cursor = dbConnection.cursor()
     
-    #records = cursor.fetchall()
-    #dbConnection.text_factory = str
+    cursor.execute("SELECT name FROM characters")
+    names = cursor.fetchall()
 
-    fetchName = cursor.execute('SELECT name FROM characters').fetchall()
+    print_names = []
+    character_numbers = 0
+    for item in names:
+        print_names += item
+        character_numbers += 1
 
-    charName = fetchName[0][0]
+    api_data = dict()
 
+    labels = []
+    del labels[:]
+    for i in range(character_numbers):
+            api_request = requests.get("https://api.tibiadata.com/v2/characters/"+print_names[i]+".json")
+            data = json.loads(api_request.text)
+            api_data.update({i: data})
+            name = api_data[i]['characters']['data']['name']
+            vocation = api_data[i]['characters']['data']['vocation']
+            level = api_data[i]['characters']['data']['level']
+            residence = api_data[i]['characters']['data']['residence']
+            world = api_data[i]['characters']['data']['world']
+            z = i+1
+            labels.append(Label(searcher,text=str(z) + " - " + name + " | " + vocation + " | " + "Lvl: " + str(level) + " | " + residence + " | " + world))
+            labels[i].place(x=10,y=10+(30*i))
 
-
-    #loop thru results
-    # print_records = ''
-
-    # for record in records:
-    #     print_records += str(record) + " " "\n"
-    
-
-    api_request = requests.get("https://api.tibiadata.com/v2/characters/"+charName+".json")
-    api = json.loads(api_request.content)
-    name = api['characters']['data']['name']
-    vocation = api['characters']['data']['vocation']
-    level = api['characters']['data']['level']
-    residence = api['characters']['data']['residence']
-    world = api['characters']['data']['world']
-
-    worldLbl = Label(searcher, text=world)
-    worldLbl.grid(row=0, column =0)
-
-    nameLbl = Label(searcher, text=name)
-    nameLbl.grid(row=0, column =1)
-
-    lvlLbl = Label(searcher, text=level)
-    lvlLbl.grid(row=0, column =2)
-
-    vocationLbl = Label(searcher, text=vocation)
-    vocationLbl.grid(row=0, column =3)
-
-    residenceLbl = Label(searcher, text=residence)
-    residenceLbl.grid(row=0, column =4)
 
     dbConnection.commit()
     dbConnection.close()
