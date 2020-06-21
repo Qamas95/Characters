@@ -58,16 +58,17 @@ def print():
 def deleteChar():
 
     if deleteEntry.get() == '':
-        return messagebox.showerror('Warning','Empty delet ID')
-
+        return messagebox.showerror('Warning','Enter character name you want to delete')
+        
     #Create db and connect
     dbConnection = sqlite3.connect('characters.db')
     #Create cursor
     cursor = dbConnection.cursor()
 
-    deleteId = deleteEntry.get()
+    deleteName = deleteEntry.get()
 
-    cursor.execute("DELETE from characters WHERE oid = " + deleteId)
+
+    cursor.execute("DELETE FROM characters WHERE name=?",(deleteName,))
     
     dbConnection.commit()
     dbConnection.close()
