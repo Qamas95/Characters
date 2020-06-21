@@ -21,7 +21,7 @@ def addCharacter():
     #Create table
     cursor.execute("""CREATE TABLE IF NOT EXISTS characters (
                         name text
-                        )""") #add in future, world, lvl
+                        )""")
     #Insert into table
     cursor.execute("INSERT INTO characters VALUES (:name)",
                 {
@@ -31,30 +31,6 @@ def addCharacter():
     dbConnection.commit()
     dbConnection.close()
 
-#print data from databse
-def print():
-    #Create db and connect
-    dbConnection = sqlite3.connect('characters.db')
-    #Create cursor
-    cursor = dbConnection.cursor()
-
-    cursor.execute("SELECT *, oid FROM characters")
-    
-    records = cursor.fetchall()
-
-    #loop thru results
-    print_records = ''
-
-    for record in records:
-        print_records += str(record) + " " "\n"
-    
-    #create label to for printed records
-    printLabel = Label(root, text=print_records)
-    printLabel.grid(row=5, column =0, columnspan=2)
-
-    dbConnection.commit()
-    dbConnection.close()
-    
 def deleteChar():
 
     if deleteEntry.get() == '':
@@ -113,27 +89,32 @@ def switcher():
     dbConnection.commit()
     dbConnection.close()
 
+
+characterName = Label(root, text="Enter character name")
+characterName.grid(row=0, column=0)
+
 entryName = Entry(root)
 entryName.grid(row=0, column=1)
 
-characterName = Label(root, text="Print character name")
-characterName.grid(row=0, column=0)
+
+addChar = Button(root, text="Submit",command=addCharacter)
+addChar.grid(row=0, column=2, ipadx=23)   
 
 
-submitButton = Button(root, text="Add Character",command=addCharacter)
-submitButton.grid(row=1, column=0, columnspan=2)   
-
-printData = Button(root, text = "Print data", command=print)
-printData.grid(row=2, column=0, columnspan=2)
-
-
-deleteCharacter = Button(root, text="Delete character", command = deleteChar)
-deleteCharacter.grid(row=3, column =0)
+deleteChar = Label(root, text="Delete character name")
+deleteChar.grid(row=1, column=0)
 
 deleteEntry = Entry(root)
-deleteEntry.grid(row=3, column = 1)
+deleteEntry.grid(row=1, column = 1)
 
-updateCharsButton = Button(root, text="Update Characters", command=switcher)
-updateCharsButton.grid(row=4, column=0, columnspan = 2)
+deleteCharacter = Button(root, text="Delete character", command = deleteChar)
+deleteCharacter.grid(row=1, column =2)
+
+
+
+updateCharsButton = Button(root, text="Print characters", command=switcher)
+updateCharsButton.grid(row=2, column=0, columnspan = 3, pady=10, padx=10, ipadx=150)
+
+
 
 root.mainloop()
