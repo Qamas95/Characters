@@ -82,6 +82,7 @@ def deleteChar():
 
 def switcher():
 
+ 
 
     searcher = Toplevel()
     searcher.title("Search in TCom")
@@ -106,43 +107,64 @@ def switcher():
         print_names += item
         character_numbers += 1
 
-    responses = list()
+    api_data = dict()
 
+    labels = []
+    del labels[:]
     for i in range(character_numbers):
             api_request = requests.get("https://api.tibiadata.com/v2/characters/"+print_names[i]+".json")
             data = json.loads(api_request.text)
-            responses.append(data)
+            api_data.update({i: data})
+            name = api_data[i]['characters']['data']['name']
+            labels.append(Label(searcher,text=name))
+            labels[i].place(x=10,y=10+(30*i))
+
+
+            
     
 
-    printLabel = Label(searcher, text=responses)
-    printLabel.grid(row=5, column =0, columnspan=2)
 
-    printLabel2 = Label(searcher, text=character_numbers)
-    printLabel2.grid(row=6, column =0, columnspan=2)
+    # charNames = api_data[0]['characters']['data']['name']
+    # charNames1 = api_data[1]['characters']['data']['name']
+    # charName2 = api_data[2]['characters']['data']['name']
+
+    # printLabel = Label(searcher, text=charNames)
+    # printLabel.grid(row=1, column =0, columnspan=2)
+
+    # printLabel = Label(searcher, text=charNames1)
+    # printLabel.grid(row=2, column =0, columnspan=2)
+
+    # printLabel = Label(searcher, text=charName2)
+    # printLabel.grid(row=3, column =0, columnspan=2)
+
+    # printLabel2 = Label(searcher, text=character_numbers)
+    # printLabel2.grid(row=6, column =0, columnspan=2)
 
     #api_request = requests.get("https://api.tibiadata.com/v2/characters/"+charNamee+".json")
-    api_request = requests.get("https://api.tibiadata.com/v2/characters/"+print_names[0]+".json")
-    api = json.loads(api_request.content)
-    name = api['characters']['data']['name']
-    vocation = api['characters']['data']['vocation']
-    level = api['characters']['data']['level']
-    residence = api['characters']['data']['residence']
-    world = api['characters']['data']['world']
+    
+    
+    # api_request = requests.get("https://api.tibiadata.com/v2/characters/"+print_names[0]+".json")
+    # api = json.loads(api_request.content)
+    # name = api['characters']['data']['name']
+    # vocation = api['characters']['data']['vocation']
+    # level = api['characters']['data']['level']
+    # residence = api['characters']['data']['residence']
+    # world = api['characters']['data']['world']
 
-    worldLbl = Label(searcher, text=world)
-    worldLbl.grid(row=0, column =0)
+    # worldLbl = Label(searcher, text=world)
+    # worldLbl.grid(row=0, column =0)
 
-    nameLbl = Label(searcher, text=name)
-    nameLbl.grid(row=0, column =1)
+    # nameLbl = Label(searcher, text=name)
+    # nameLbl.grid(row=0, column =1)
 
-    lvlLbl = Label(searcher, text=level)
-    lvlLbl.grid(row=0, column =2)
+    # lvlLbl = Label(searcher, text=level)
+    # lvlLbl.grid(row=0, column =2)
 
-    vocationLbl = Label(searcher, text=vocation)
-    vocationLbl.grid(row=0, column =3)
+    # vocationLbl = Label(searcher, text=vocation)
+    # vocationLbl.grid(row=0, column =3)
 
-    residenceLbl = Label(searcher, text=residence)
-    residenceLbl.grid(row=0, column =4)
+    # residenceLbl = Label(searcher, text=residence)
+    # residenceLbl.grid(row=0, column =4)
 
 
 
