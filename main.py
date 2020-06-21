@@ -4,13 +4,6 @@ from tkinter import messagebox
 import requests
 import json
 
-# imports to scarp web
-# from selenium import webdriver
-# from bs4 import BeautifulSoup    
-# import pandas as pd
-# from webdriver_manager.chrome import ChromeDriverManager
-
-
 
 root = Tk()
 root.title("Character Databse")
@@ -64,7 +57,6 @@ def print():
     
 def deleteChar():
 
-
     if deleteEntry.get() == '':
         return messagebox.showerror('Warning','Empty delet ID')
 
@@ -81,22 +73,14 @@ def deleteChar():
     dbConnection.close()
 
 def switcher():
-
- 
-
     searcher = Toplevel()
     searcher.title("Search in TCom")
     searcher.geometry("400x400")
-
 
     #Create db and connect
     dbConnection = sqlite3.connect('characters.db')
     #Create cursor
     cursor = dbConnection.cursor()
-    
-    #records = cursor.fetchall()
-    #dbConnection.text_factory = str
-
     
     cursor.execute("SELECT name FROM characters")
     names = cursor.fetchall()
@@ -116,57 +100,13 @@ def switcher():
             data = json.loads(api_request.text)
             api_data.update({i: data})
             name = api_data[i]['characters']['data']['name']
-            labels.append(Label(searcher,text=name))
+            vocation = api_data[i]['characters']['data']['vocation']
+            level = api_data[i]['characters']['data']['level']
+            residence = api_data[i]['characters']['data']['residence']
+            world = api_data[i]['characters']['data']['world']
+            z = i+1
+            labels.append(Label(searcher,text=str(z) + " - " + name + " | " + vocation + " | " + "Lvl: " + str(level) + " | " + residence + " | " + world))
             labels[i].place(x=10,y=10+(30*i))
-
-
-            
-    
-
-
-    # charNames = api_data[0]['characters']['data']['name']
-    # charNames1 = api_data[1]['characters']['data']['name']
-    # charName2 = api_data[2]['characters']['data']['name']
-
-    # printLabel = Label(searcher, text=charNames)
-    # printLabel.grid(row=1, column =0, columnspan=2)
-
-    # printLabel = Label(searcher, text=charNames1)
-    # printLabel.grid(row=2, column =0, columnspan=2)
-
-    # printLabel = Label(searcher, text=charName2)
-    # printLabel.grid(row=3, column =0, columnspan=2)
-
-    # printLabel2 = Label(searcher, text=character_numbers)
-    # printLabel2.grid(row=6, column =0, columnspan=2)
-
-    #api_request = requests.get("https://api.tibiadata.com/v2/characters/"+charNamee+".json")
-    
-    
-    # api_request = requests.get("https://api.tibiadata.com/v2/characters/"+print_names[0]+".json")
-    # api = json.loads(api_request.content)
-    # name = api['characters']['data']['name']
-    # vocation = api['characters']['data']['vocation']
-    # level = api['characters']['data']['level']
-    # residence = api['characters']['data']['residence']
-    # world = api['characters']['data']['world']
-
-    # worldLbl = Label(searcher, text=world)
-    # worldLbl.grid(row=0, column =0)
-
-    # nameLbl = Label(searcher, text=name)
-    # nameLbl.grid(row=0, column =1)
-
-    # lvlLbl = Label(searcher, text=level)
-    # lvlLbl.grid(row=0, column =2)
-
-    # vocationLbl = Label(searcher, text=vocation)
-    # vocationLbl.grid(row=0, column =3)
-
-    # residenceLbl = Label(searcher, text=residence)
-    # residenceLbl.grid(row=0, column =4)
-
-
 
 
     dbConnection.commit()
