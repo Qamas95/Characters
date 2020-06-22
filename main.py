@@ -1,15 +1,21 @@
 from tkinter import *
 import sqlite3
 from tkinter import messagebox
+from tkinter import ttk
 import requests
 import json
+
+
 
 
 root = Tk()
 root.title("Character Databse")
 root.geometry("800x800")
 
+
+
 global character_numbers
+
 
 
 def addCharacter():
@@ -33,7 +39,7 @@ def addCharacter():
 
 def deleteChar():
 
-    if deleteEntry.get() == '':
+    if deleteEntry.get() == "":
         return messagebox.showerror('Warning','Enter character name you want to delete')
         
     #Create db and connect
@@ -50,6 +56,7 @@ def deleteChar():
     dbConnection.close()
 
 def switcher():
+
     searcher = Toplevel()
     searcher.title("Search in TCom")
     searcher.geometry("400x400")
@@ -101,8 +108,8 @@ addChar = Button(root, text="Submit",command=addCharacter)
 addChar.grid(row=0, column=2, ipadx=23)   
 
 
-deleteChar = Label(root, text="Delete character name")
-deleteChar.grid(row=1, column=0)
+deleteChars = Label(root, text="Delete character name")
+deleteChars.grid(row=1, column=0)
 
 deleteEntry = Entry(root)
 deleteEntry.grid(row=1, column = 1)
@@ -114,6 +121,8 @@ deleteCharacter.grid(row=1, column =2)
 
 updateCharsButton = Button(root, text="Print characters", command=switcher)
 updateCharsButton.grid(row=2, column=0, columnspan = 3, pady=10, padx=10, ipadx=150)
+
+charFrame = Frame(root, )
 
 
 
