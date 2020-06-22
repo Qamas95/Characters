@@ -101,7 +101,7 @@ def switcher():
             z = i+1
             listbox.insert(END,str(z) + " - " + name + " | " + vocation + " | " + "Lvl: " + str(level) + " | " + residence + " | " + world)
 
-            #previous print, now data list available in scrollable box
+            #previous print, now data list available in scroll box
             # labels.append(Label(searcher,text=str(z) + " - " + name + " | " + vocation + " | " + "Lvl: " + str(level) + " | " + residence + " | " + world))
             # labels[i].place(x=10,y=10+(30*i))
 
