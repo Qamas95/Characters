@@ -1,7 +1,7 @@
 from tkinter import *
 import sqlite3
 from tkinter import messagebox
-from tkinter import ttk
+
 import requests
 import json
 
@@ -11,6 +11,7 @@ import json
 root = Tk()
 root.title("Character Databse")
 root.geometry("800x800")
+
 
 
 
@@ -57,9 +58,18 @@ def deleteChar():
 
 def switcher():
 
+
     searcher = Toplevel()
     searcher.title("Search in TCom")
     searcher.geometry("400x400")
+
+    scrollbar = Scrollbar(searcher)
+    scrollbar.pack(side=RIGHT, fill=Y)
+
+    listbox = Listbox(searcher)
+    listbox.pack(fill=BOTH, expand=1)
+
+
 
     #Create db and connect
     dbConnection = sqlite3.connect('characters.db')
@@ -89,12 +99,20 @@ def switcher():
             residence = api_data[i]['characters']['data']['residence']
             world = api_data[i]['characters']['data']['world']
             z = i+1
-            labels.append(Label(searcher,text=str(z) + " - " + name + " | " + vocation + " | " + "Lvl: " + str(level) + " | " + residence + " | " + world))
-            labels[i].place(x=10,y=10+(30*i))
+            listbox.insert(END,str(z) + " - " + name + " | " + vocation + " | " + "Lvl: " + str(level) + " | " + residence + " | " + world)
 
+            #previous print, now data list available in scrollable box
+            # labels.append(Label(searcher,text=str(z) + " - " + name + " | " + vocation + " | " + "Lvl: " + str(level) + " | " + residence + " | " + world))
+            # labels[i].place(x=10,y=10+(30*i))
+
+
+    listbox.config(yscrollcommand=scrollbar.set)
+    scrollbar.config(command=listbox.yview)
 
     dbConnection.commit()
     dbConnection.close()
+
+
 
 
 characterName = Label(root, text="Enter character name")
