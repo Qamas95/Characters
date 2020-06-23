@@ -12,19 +12,28 @@ root.geometry("800x800")
 global character_numbers
 
 
+
 def clearDatabase():
-    #Create db and connect
-    dbConnection = sqlite3.connect('characters.db')
-    #Create cursor
-    cursor = dbConnection.cursor()
-
-    cursor.execute("DELETE FROM characters;")
-
-    dbConnection.commit()
-    dbConnection.close()
-
-
-
+    result = messagebox.askyesno('Question', 'Do you wanna delete all character from databse?')
+    if result == True:
+        #Create db and connect
+        dbConnection = sqlite3.connect('characters.db')
+        #Create cursor
+        cursor = dbConnection.cursor()
+        cursor.execute("DELETE FROM characters;")
+        messagebox.showinfo('Info','You have deleted ' + str(cursor.rowcount) + ' characters')
+        dbConnection.commit()
+        dbConnection.close()
+        #Create db and connect
+        dbConnection = sqlite3.connect('characters.db')
+        #Create cursor
+        cursor = dbConnection.cursor()
+        cursor.execute("DELETE FROM characters;")
+        dbConnection.commit()
+        dbConnection.close()
+    elif result == False:
+        return messagebox.showinfo('Info','You have not deleted any characters')
+    
 
 def addCharacter():
 
