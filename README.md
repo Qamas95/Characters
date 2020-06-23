@@ -1,6 +1,6 @@
 # Characters
 
-## Python application that helps track the level of botted characters
+## Python application that helps track the level of characters
 
 1. **Run app**
     - Download repository
