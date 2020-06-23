@@ -5,19 +5,35 @@ from tkinter import messagebox
 import requests
 import json
 
-
-
-
 root = Tk()
 root.title("Character Databse")
 root.geometry("800x800")
 
-
-
-
 global character_numbers
 
 
+
+def clearDatabase():
+    result = messagebox.askyesno('Question', 'Do you wanna delete all character from databse?')
+    if result == True:
+        #Create db and connect
+        dbConnection = sqlite3.connect('characters.db')
+        #Create cursor
+        cursor = dbConnection.cursor()
+        cursor.execute("DELETE FROM characters;")
+        messagebox.showinfo('Info','You have deleted ' + str(cursor.rowcount) + ' characters')
+        dbConnection.commit()
+        dbConnection.close()
+        #Create db and connect
+        dbConnection = sqlite3.connect('characters.db')
+        #Create cursor
+        cursor = dbConnection.cursor()
+        cursor.execute("DELETE FROM characters;")
+        dbConnection.commit()
+        dbConnection.close()
+    elif result == False:
+        return messagebox.showinfo('Info','You have not deleted any characters')
+    
 
 def addCharacter():
 
@@ -140,8 +156,8 @@ deleteCharacter.grid(row=1, column =2)
 updateCharsButton = Button(root, text="Print characters", command=switcher)
 updateCharsButton.grid(row=2, column=0, columnspan = 3, pady=10, padx=10, ipadx=150)
 
-charFrame = Frame(root, )
-
+clearDB = Button(root, text="Clear Database", command=clearDatabase)
+clearDB.grid(row=3, column=0, columnspan = 3, pady=10, padx=10, ipadx=150)
 
 
 root.mainloop()
