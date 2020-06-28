@@ -1,10 +1,14 @@
 from tkinter import *
 import sqlite3
 from tkinter import messagebox
+from tkinter import filedialog
 
 import requests
 import json
 import pandas as pd
+import os
+
+
 
 root = Tk()
 root.title("Character Databse")
@@ -89,8 +93,6 @@ def switcher():
     listbox = Listbox(searcher)
     listbox.pack(fill=BOTH, expand=1)
 
-
-
     #Create db and connect
     dbConnection = sqlite3.connect('characters.db')
     #Create cursor
@@ -160,20 +162,25 @@ def savexlsx():
             level = api_data[i]['characters']['data']['level']
             residence = api_data[i]['characters']['data']['residence']
             world = api_data[i]['characters']['data']['world']
-
-            
-        
             d.append((name,vocation,level,residence,world))
             
-                
     df = pd.DataFrame(d,columns=('Name','Vocation','Level','Residence','World'))
     df.index += 1
 
-    df.to_excel("text.xlsx",sheet_name='test')
+
+    df.to_excel("test.xlsx",sheet_name='characters')
 
 
     dbConnection.commit()
     dbConnection.close()
+
+def openGame():
+
+    try:
+        os.startfile('C:/Users/kk/AppData/Local/Tibia/Tibia.exe')
+    except:
+        print("Can't open file")
+
 
 
 
@@ -208,6 +215,12 @@ clearDB.grid(row=3, column=0, columnspan = 3, pady=10, padx=10, ipadx=150)
 
 addExcel = Button(root, text="Save in Excel", command=savexlsx)
 addExcel.grid(row=4, column=0, columnspan = 3, pady=10, padx=10, ipadx=155)
+
+startGame = Button(root, text="Open Game", command=openGame)
+startGame.grid(row=5, column=0, columnspan = 3, pady=10, padx=10, ipadx=155)
+
+
+
 
 
 root.mainloop()
