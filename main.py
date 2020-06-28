@@ -4,6 +4,7 @@ from tkinter import messagebox
 
 import requests
 import json
+import pandas as pd
 
 root = Tk()
 root.title("Character Databse")
@@ -51,6 +52,8 @@ def addCharacter():
                     'name': entryName.get()
                 }
     )
+
+    entryName.delete(0,END)
     dbConnection.commit()
     dbConnection.close()
 
@@ -69,6 +72,7 @@ def deleteChar():
 
     cursor.execute("DELETE FROM characters WHERE name=?",(deleteName,))
     
+    deleteEntry.delete(0,END)
     dbConnection.commit()
     dbConnection.close()
 
@@ -128,6 +132,48 @@ def switcher():
     dbConnection.commit()
     dbConnection.close()
 
+def savexlsx():
+
+    #Create db and connect
+    dbConnection = sqlite3.connect('characters.db')
+    #Create cursor
+    cursor = dbConnection.cursor()
+
+    cursor.execute("SELECT name FROM characters")
+    names = cursor.fetchall()
+
+    print_names = []
+    character_numbers = 0
+    for item in names:
+        print_names += item
+        character_numbers += 1
+
+    api_data = dict()
+    d = []
+
+    for i in range(character_numbers):
+            api_request = requests.get("https://api.tibiadata.com/v2/characters/"+print_names[i]+".json")
+            data = json.loads(api_request.text)
+            api_data.update({i: data})
+            name = api_data[i]['characters']['data']['name']
+            vocation = api_data[i]['characters']['data']['vocation']
+            level = api_data[i]['characters']['data']['level']
+            residence = api_data[i]['characters']['data']['residence']
+            world = api_data[i]['characters']['data']['world']
+
+            
+        
+            d.append((name,vocation,level,residence,world))
+            
+                
+    df = pd.DataFrame(d,columns=('Name','Vocation','Level','Residence','World'))
+    df.index += 1
+
+    df.to_excel("text.xlsx",sheet_name='test')
+
+
+    dbConnection.commit()
+    dbConnection.close()
 
 
 
@@ -158,6 +204,10 @@ updateCharsButton.grid(row=2, column=0, columnspan = 3, pady=10, padx=10, ipadx=
 
 clearDB = Button(root, text="Clear Database", command=clearDatabase)
 clearDB.grid(row=3, column=0, columnspan = 3, pady=10, padx=10, ipadx=150)
+
+
+addExcel = Button(root, text="Save in Excel", command=savexlsx)
+addExcel.grid(row=4, column=0, columnspan = 3, pady=10, padx=10, ipadx=155)
 
 
 root.mainloop()
