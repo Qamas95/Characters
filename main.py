@@ -52,6 +52,8 @@ def addCharacter():
                     'name': entryName.get()
                 }
     )
+
+    entryName.delete(0,END)
     dbConnection.commit()
     dbConnection.close()
 
@@ -70,6 +72,7 @@ def deleteChar():
 
     cursor.execute("DELETE FROM characters WHERE name=?",(deleteName,))
     
+    deleteEntry.delete(0,END)
     dbConnection.commit()
     dbConnection.close()
 
@@ -146,7 +149,7 @@ def savexlsx():
         character_numbers += 1
 
     api_data = dict()
-
+    d = []
 
     for i in range(character_numbers):
             api_request = requests.get("https://api.tibiadata.com/v2/characters/"+print_names[i]+".json")
@@ -157,11 +160,18 @@ def savexlsx():
             level = api_data[i]['characters']['data']['level']
             residence = api_data[i]['characters']['data']['residence']
             world = api_data[i]['characters']['data']['world']
-            z = i+1
-            df = pd.DataFrame(data=api_data)
+
             
-            #listbox.insert(END,str(z) + " - " + name + " | " + vocation + " | " + "Lvl: " + str(level) + " | " + residence + " | " + world)
+        
+            d.append((name,vocation,level,residence,world))
+            
+                
+    df = pd.DataFrame(d,columns=('Name','Vocation','Level','Residence','World'))
+    df.index += 1
+
     df.to_excel("text.xlsx",sheet_name='test')
+
+
     dbConnection.commit()
     dbConnection.close()
 
