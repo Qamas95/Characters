@@ -175,13 +175,10 @@ def savexlsx():
     dbConnection.close()
 
 def openGame():
-
     try:
         os.startfile('C:/Users/kk/AppData/Local/Tibia/Tibia.exe')
     except:
         print("Can't open file")
-
-
 
 
 characterName = Label(root, text="Enter character name")
@@ -217,10 +214,7 @@ addExcel = Button(root, text="Save in Excel", command=savexlsx)
 addExcel.grid(row=4, column=0, columnspan = 3, pady=10, padx=10, ipadx=155)
 
 startGame = Button(root, text="Open Game", command=openGame)
-startGame.grid(row=5, column=0, columnspan = 3, pady=10, padx=10, ipadx=155)
-
-
-
+startGame.grid(row=5, column=0, columnspan = 3, pady=10, padx=10, ipadx=156)
 
 
 root.mainloop()
