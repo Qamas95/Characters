@@ -1,0 +1,119 @@
+{% load static %}
+<html>
+
+<head>
+
+    {% if title %}
+    <title>DwarfBot Website - {{title}}</title>
+    {% else %}
+    <title>DwarfBot Website</title>
+    {% endif %}
+
+
+    <link rel="stylesheet" href="{% static 'bot/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+    <!---NavigationBar-->
+    <section id="nav-bar">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="#"><img src="img/logo.png"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'bot-home' %}">HOME</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">PURCHASE</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">FORUM</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">SCRIPTS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">CONTACT</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">ACCOUNT</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </section>
+
+
+    {% block content %}{% endblock %}
+
+
+    <!--Get in Touch-->
+    <section id="contact">
+        <div class="container">
+            <h1>Get In Touch</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Your Name">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="4" placeholder="Your Message"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Send message
+                        </button>
+                    </form>
+                </div>
+                <div class="col-md-6 contact-info">
+                    <div class="follow"><b>Email:</b>
+
+                        <i class="fa fa-envelope-o"></i>test@wp.pl
+                    </div>
+                    <div class="follow">
+                        <label><b>Get Social:</b></label>
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-youtube-play"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-google-plus"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!---Footer-->
+
+    <section id="footer">
+        <div class="container text-center">
+            <p>
+                Made by <i class="fa fa-heart-o"></i> Qamas
+            </p>
+        </div>
+    </section>
+
+    <!--Footer Close-->
+
+    <script src="js/smooth-scroll.js"></script>
+    <script>
+        var scroll = new SmoothScroll('a[href*="#"]');
+    </script>
+
+
+</body>
+
+
+</html>
