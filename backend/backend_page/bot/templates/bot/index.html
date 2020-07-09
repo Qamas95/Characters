@@ -29,6 +29,15 @@
         </a>
     </div>
 </div>
+
+
+
+{% for post in posts %}
+<h2>{{ post.author }}</h2>
+<h2>{{ post.date_posed|date:"F d, Y, H:i"}}</h2>
+
+<h2>{{ post.title }}</h2>
+{{ post.content }} {% endfor %}
 <!---About-->
 <section id="about">
     <div class="container">
