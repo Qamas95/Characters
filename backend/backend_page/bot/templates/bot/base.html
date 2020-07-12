@@ -40,14 +40,23 @@
                         <a class="nav-link" href="#">FORUM</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">SCRIPTS</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="#contact">CONTACT</a>
                     </li>
+                    {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">ACCOUNT</a>
+                        <a class="nav-link" href="{% url 'logout' %}">LOGOUT</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile' %}">PROFILE</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">LOGIN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">REGISTER</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
