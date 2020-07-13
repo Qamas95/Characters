@@ -33,6 +33,7 @@
 
 
 {% for post in posts %}
+<img class="rounded-circle" src="{{ post.author.profile.image.url }}">
 <h2>{{ post.author }}</h2>
 <h2>{{ post.date_posed|date:"F d, Y, H:i"}}</h2>
 
