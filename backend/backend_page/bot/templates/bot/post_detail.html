@@ -1,0 +1,11 @@
+{% extends "bot/base.html" %} {% load static %} {% block content %}
+<title>DwarfBot Website</title>
+
+
+
+<img class="rounded-circle" src="{{ object.author.profile.image.url }}">
+<h2>{{ object.author }}</h2>
+<h2>{{ object.date_posed|date:"F d, Y, H:i"}}</h2>
+
+<h2>{{ object.title }}</h2>
+{{ object.content }} {% endblock content %}

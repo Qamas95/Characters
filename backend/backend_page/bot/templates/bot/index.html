@@ -31,14 +31,15 @@
 </div>
 
 
-
 {% for post in posts %}
 <img class="rounded-circle" src="{{ post.author.profile.image.url }}">
 <h2>{{ post.author }}</h2>
 <h2>{{ post.date_posed|date:"F d, Y, H:i"}}</h2>
-
-<h2>{{ post.title }}</h2>
+<h3>
+    <a class="about-content" href="{% url 'post-detail' post.id %}">{{ post.title }}</a>
+</h3>
 {{ post.content }} {% endfor %}
+
 <!---About-->
 <section id="about">
     <div class="container">
